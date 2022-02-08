@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface IConfigurationService {
     Iterable<Configuration> findAllConfigurations();
     Optional<Configuration> findConfigurationBySerialNumber(String serialNumber);
+    Configuration saveConfiguration(Configuration configuration);
 }

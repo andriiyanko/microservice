@@ -31,5 +31,17 @@ public class ControllerAdvice {
 
         return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(UniqueElementException.class)
+    public ResponseEntity<ErrorMessage> uniqueElementException(UniqueElementException ex, WebRequest request){
+        ErrorMessage errorMessage = new ErrorMessage(
+                HttpStatus.FORBIDDEN.value(),
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false));
+
+        return new ResponseEntity<>(errorMessage, HttpStatus.FORBIDDEN);
+
+    }
 }
 

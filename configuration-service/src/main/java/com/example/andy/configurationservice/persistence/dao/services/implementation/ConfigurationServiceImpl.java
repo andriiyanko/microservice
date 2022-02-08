@@ -31,4 +31,10 @@ public class ConfigurationServiceImpl implements IConfigurationService {
         log.info("Inside findConfigurationBySerialNumber of ConfigurationServiceImpl");
         return configurationRepository.findConfigurationBySerialNumber(serialNumber);
     }
+
+    @Override
+    public Configuration saveConfiguration(Configuration configuration) {
+        log.info("Inside saveConfiguration of ConfigurationServiceImpl");
+        return configurationRepository.save(configuration);
+    }
 }
