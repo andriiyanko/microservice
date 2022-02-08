@@ -1,5 +1,6 @@
 package com.example.andy.configurationservice.controller;
 
+import com.example.andy.configurationservice.exceptions.ResourceNotFoundException;
 import com.example.andy.configurationservice.persistence.dao.services.interfaces.IConfigurationService;
 import com.example.andy.configurationservice.persistence.model.Configuration;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,6 +40,12 @@ public class ConfigurationController {
         catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/configurations/{serialNumber}")
+    public ResponseEntity<Configuration> getConfigurationBySerialNumber(@PathVariable("serialNumber") String serialNumber){
+        Configuration configuration = configurationService.findConfigurationBySerialNumber(serialNumber).orElseThrow(() -> new ResourceNotFoundException("Not found Configuration with serial number" + serialNumber));
+        return new ResponseEntity<>(configuration,HttpStatus.OK);
     }
 
 }

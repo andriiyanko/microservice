@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Slf4j
 public class ConfigurationServiceImpl implements IConfigurationService {
@@ -22,5 +24,11 @@ public class ConfigurationServiceImpl implements IConfigurationService {
     public Iterable<Configuration> findAllConfigurations() {
         log.info("Inside findAllConfigurations of ConfigurationServiceImpl");
         return configurationRepository.findAll();
+    }
+
+    @Override
+    public Optional<Configuration> findConfigurationBySerialNumber(String serialNumber) {
+        log.info("Inside findConfigurationBySerialNumber of ConfigurationServiceImpl");
+        return configurationRepository.findConfigurationBySerialNumber(serialNumber);
     }
 }
