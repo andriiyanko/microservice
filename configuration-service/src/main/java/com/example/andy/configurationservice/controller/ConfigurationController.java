@@ -68,6 +68,7 @@ public class ConfigurationController {
     }
 
     private boolean checkUniqueSerialNumber(Configuration configurationRequest, IConfigurationService configurationService){
+        log.info("Inside checkUniqueSerialNumber method of ConfigurationController");
         StringBuilder serialNumberRequest = new StringBuilder(configurationRequest.getSerialNumber());
         serialNumberRequest.trimToSize();
 

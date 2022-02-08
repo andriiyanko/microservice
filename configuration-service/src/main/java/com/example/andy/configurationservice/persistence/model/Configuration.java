@@ -1,6 +1,5 @@
 package com.example.andy.configurationservice.persistence.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,7 +25,7 @@ public class Configuration {
     @Column(name = "serial_number", nullable = false)
     private String serialNumber;
 
-    @NotBlank(message = "Serial number is mandatory. Ip address must have this format 192.168.0.0")
+    @NotBlank(message = "Ip address is mandatory. Ip address must have this format 192.168.0.0")
     @Size(max = 16, message = "Ip address size should not be more than 16 characters ")
     @Column(name = "ip_address", nullable = false)
     private String ipAddress;
