@@ -30,7 +30,7 @@ public class Configuration {
     @Column(name = "ip_address", nullable = false)
     private String ipAddress;
 
-    @NotBlank(message = "Serial number is mandatory. Subnet mask must have this format 255.0.0.0")
+    @NotBlank(message = "Subnet mask is mandatory. Subnet mask must have this format 255.0.0.0")
     @Size(max = 16, message = "Subnet mask size should not be more than 16 characters ")
     @Column(name = "subnet_mask", nullable = false)
     private String subnetMask;
