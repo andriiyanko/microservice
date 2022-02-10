@@ -3,12 +3,10 @@ package com.example.andy.configurationservice.persistence.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Data
@@ -25,13 +23,14 @@ public class Configuration {
     @Column(name = "serial_number", nullable = false)
     private String serialNumber;
 
-    @NotBlank(message = "Ip address is mandatory. Ip address must have this format 192.168.0.0")
-    @Size(max = 16, message = "Ip address size should not be more than 16 characters ")
+    @NotBlank(message = "Ip address is mandatory")
+    @Pattern(regexp = "^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$", message = "Ip address must have this format 192.168.0.0")
     @Column(name = "ip_address", nullable = false)
     private String ipAddress;
 
-    @NotBlank(message = "Subnet mask is mandatory. Subnet mask must have this format 255.0.0.0")
-    @Size(max = 16, message = "Subnet mask size should not be more than 16 characters ")
+    @NotBlank(message = "Subnet mask is mandatory")
+    @Pattern(regexp = "^(255)\\.(0|128|192|224|240|248|252|255)\\.(0|128|192|224|240|248|252|255)\\.(0|128|192|224|240|248|252|255)$",
+            message = "Subnet mask must have this format 255.(0|128|192|224|240|248|252|255).(0|128|192|224|240|248|252|255).(0|128|192|224|240|248|252|255)")
     @Column(name = "subnet_mask", nullable = false)
     private String subnetMask;
 
