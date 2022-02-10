@@ -9,9 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.example.andy</groupId>
     <artifactId>registry-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>registry-service</name>
     <description>registry-service</description>
     <properties>
