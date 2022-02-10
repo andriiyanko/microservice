@@ -6,6 +6,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>configuration-service</module>
+        <module>registry-service</module>
     </modules>
 
     <parent>
