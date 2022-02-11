@@ -13,7 +13,7 @@ public class RegistryServiceImpl implements IRegistryService {
     private RegistryRepository registryRepository;
     private RestTemplate restTemplate;
 
-    private final String url = "http://localhost:9001/api/configurations/";
+    private final String URL = "http://localhost:9001/api/configurations/";
 
     @Autowired
     public void setRestTemplate(RestTemplate restTemplate) {
@@ -25,14 +25,17 @@ public class RegistryServiceImpl implements IRegistryService {
         this.registryRepository = registryRepository;
     }
 
+    public Configuration fetchConfigurationBySerialNumber(String serialNumber){
+        return restTemplate.getForObject(URL + serialNumber, Configuration.class);
+    }
+
     @Override
     public Registry saveRegistry(Registry registry) {
-        Configuration configuration = restTemplate
-                .getForObject(url + registry.getSerialNumber(), Configuration.class);
-
+        Configuration configuration = fetchConfigurationBySerialNumber(registry.getSerialNumber());
         registry.setIpAddress(configuration.getIpAddress());
         registry.setSubnetMask(configuration.getSubnetMask());
 
         return registryRepository.save(registry);
+
     }
 }

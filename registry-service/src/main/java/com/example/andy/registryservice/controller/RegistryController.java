@@ -1,5 +1,6 @@
 package com.example.andy.registryservice.controller;
 
+import com.example.andy.registryservice.exceptions.ResourceNotFoundException;
 import com.example.andy.registryservice.persistence.dao.services.interfaces.IRegistryService;
 import com.example.andy.registryservice.persistence.model.Registry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,7 @@ public class RegistryController {
 
     @PostMapping("/registries")
     public ResponseEntity<Registry> createRegistry(@RequestBody Registry registry){
-        Registry saveRegistry = registryService.saveRegistry(new Registry(registry.getVendor(), registry.getModel(), registry.getSerialNumber(),
-                registry.getMacAddress()));
-
+        Registry saveRegistry = registryService.saveRegistry(new Registry(registry.getVendor(), registry.getModel(), registry.getSerialNumber(), registry.getMacAddress()));
         return new ResponseEntity<>(saveRegistry, HttpStatus.CREATED);
     }
 
