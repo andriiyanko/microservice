@@ -53,7 +53,7 @@ public class ConfigurationController {
     public ResponseEntity<Configuration> getConfigurationBySerialNumber(@PathVariable("serialNumber") String serialNumber){
         log.info("Inside getConfigurationBySerialNumber method of ConfigurationController");
         Configuration configuration = configurationService.findConfigurationBySerialNumber(serialNumber)
-                .orElseThrow(() -> new ResourceNotFoundException("Not found Configuration with serial number" + serialNumber));
+                .orElseThrow(() -> new ResourceNotFoundException("Not found Configuration with serial number " + serialNumber));
         return new ResponseEntity<>(configuration,HttpStatus.OK);
     }
 

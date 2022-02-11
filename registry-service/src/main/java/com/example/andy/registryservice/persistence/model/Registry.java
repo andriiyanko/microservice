@@ -47,4 +47,5 @@ public class Registry {
         this.ipAddress = ipAddress;
         this.subnetMask = subnetMask;
     }
+
 }
