@@ -1,5 +1,6 @@
 package com.example.andy.registryservice.persistence.dao.services.implementation;
 
+import com.example.andy.registryservice.exceptions.RestTemplateErrorHandler;
 import com.example.andy.registryservice.persistence.dao.repositories.RegistryRepository;
 import com.example.andy.registryservice.persistence.dao.services.interfaces.IRegistryService;
 import com.example.andy.registryservice.persistence.model.Configuration;
@@ -26,12 +27,14 @@ public class RegistryServiceImpl implements IRegistryService {
     }
 
     public Configuration fetchConfigurationBySerialNumber(String serialNumber){
-        return restTemplate.getForObject(URL + serialNumber, Configuration.class);
+            restTemplate.setErrorHandler(new RestTemplateErrorHandler());
+            return restTemplate.getForObject(URL + serialNumber, Configuration.class);
     }
 
     @Override
     public Registry saveRegistry(Registry registry) {
         Configuration configuration = fetchConfigurationBySerialNumber(registry.getSerialNumber());
+
         registry.setIpAddress(configuration.getIpAddress());
         registry.setSubnetMask(configuration.getSubnetMask());
 
