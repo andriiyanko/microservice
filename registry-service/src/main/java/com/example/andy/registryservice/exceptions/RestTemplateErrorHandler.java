@@ -37,12 +37,12 @@ public class RestTemplateErrorHandler implements ResponseErrorHandler {
     private String getBodyMessage (ClientHttpResponse response) throws IOException {
         InputStream inputStream = response.getBody();
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        int nREad;
+        int nRead;
         byte[] data = new byte[1024];
 
         // read and write to buffer
-        while ((nREad = inputStream.read(data, 0, data.length)) != -1){
-            buffer.write(data, 0, nREad);
+        while ((nRead = inputStream.read(data, 0, data.length)) != -1){
+            buffer.write(data, 0, nRead);
         }
 
         buffer.flush();
