@@ -26,7 +26,7 @@ public class Registry {
     private String model;
 
     @NotBlank(message = "Serial number is mandatory")
-    @Column(name = "serial_number", unique = true)
+    @Column(name = "serial_number")
     private String serialNumber;
 
     @NotBlank(message = "Mac address is mandatory")

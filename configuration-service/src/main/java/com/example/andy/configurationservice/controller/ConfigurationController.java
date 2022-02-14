@@ -1,9 +1,7 @@
 package com.example.andy.configurationservice.controller;
 
 import com.example.andy.configurationservice.exceptions.ResourceNotFoundException;
-import com.example.andy.configurationservice.exceptions.UniqueElementException;
 import com.example.andy.configurationservice.persistence.dao.services.interfaces.IConfigurationService;
-import com.example.andy.configurationservice.persistence.dao.services.interfaces.ISerialNumber;
 import com.example.andy.configurationservice.persistence.model.Configuration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +18,6 @@ import java.util.List;
 @Slf4j
 public class ConfigurationController {
     private IConfigurationService configurationService;
-
-    private ISerialNumber iSerialNumber;
-
-    @Autowired
-    public void setSerialNumber(ISerialNumber serialNumber) {
-        this.iSerialNumber = serialNumber;
-    }
 
     @Autowired
     public void setConfigurationService(IConfigurationService configurationService) {
@@ -60,19 +51,9 @@ public class ConfigurationController {
     @PostMapping("/configurations")
     public ResponseEntity<Configuration> createConfiguration( @Validated @RequestBody Configuration configurationRequest){
         log.info("Inside createConfiguration method of ConfigurationController");
+        Configuration configuration = configurationService.saveConfiguration(new Configuration(configurationRequest.getSerialNumber(), configurationRequest.getIpAddress(), configurationRequest.getSubnetMask()));
+        return new ResponseEntity<>(configuration, HttpStatus.CREATED);
 
-        boolean uniqueSerialNumber = iSerialNumber.checkUniqueSerialNumber(configurationRequest.getSerialNumber());
-
-        if (!uniqueSerialNumber){
-            throw new UniqueElementException("Serial number must be unique!");
-        }
-        try {
-            Configuration configuration = configurationService.saveConfiguration(new Configuration(configurationRequest.getSerialNumber(), configurationRequest.getIpAddress(), configurationRequest.getSubnetMask()));
-            return new ResponseEntity<>(configuration, HttpStatus.CREATED);
-        }
-        catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
 }

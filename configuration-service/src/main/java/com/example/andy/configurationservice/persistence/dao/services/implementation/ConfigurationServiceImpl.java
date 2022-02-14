@@ -39,6 +39,8 @@ public class ConfigurationServiceImpl implements IConfigurationService, ISerialN
     @Override
     public Configuration saveConfiguration(Configuration configuration) {
         log.info("Inside saveConfiguration of ConfigurationServiceImpl");
+        if (!checkUniqueSerialNumber(configuration.getSerialNumber()))
+            throw new UniqueElementException("Serial number must be unique");
         return configurationRepository.save(configuration);
     }
 
@@ -46,13 +48,12 @@ public class ConfigurationServiceImpl implements IConfigurationService, ISerialN
     public boolean checkUniqueSerialNumber(String serialNumber) {
         log.info("Inside checkUniqueSerialNumber method of ConfigurationServiceImpl");
         StringBuilder serialNumberBuilder = new StringBuilder(serialNumber);
-        serialNumberBuilder.trimToSize();
 
         List<Configuration> configurations = new ArrayList<>();
         configurationRepository.findAll().forEach(configurations::add);
 
         for (Configuration configuration : configurations) {
-            if (serialNumberBuilder.toString().equals(configuration.getSerialNumber()))
+            if (serialNumberBuilder.toString().trim().equals(configuration.getSerialNumber()))
                 return false;
         }
         return true;
