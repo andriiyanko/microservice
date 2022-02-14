@@ -126,28 +126,6 @@ public class ConfigurationControllerTest {
     }
 
     @Test
-    public void givenConfigurationWithNotUniqueSerialNumber_thenReturnForbiddenStatusCode() {
-        try {
-            Configuration configuration = new Configuration(1,"01ABCDEF07", "192.168.0.101", "255.255.255.0");
-            Mockito.when(configurationService.saveConfiguration(configuration)).thenReturn(configuration);
-            System.out.println(configurationService.saveConfiguration(configuration));
-            Mockito.when(iSerialNumber.checkUniqueSerialNumber("01ABCDEF07")).thenReturn(false);
-
-            mockMvc.perform(post("/api/configurations")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(mapper.writeValueAsString(configurationService.saveConfiguration(configuration)))
-                            .accept(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isForbidden())
-                    .andDo(print());
-
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
     public void givenInValidConfigurationToSave_thenReturnInternalServerErrorStatusCode() {
         try {
             Mockito.when(configurationService.saveConfiguration(Mockito.any())).thenReturn(null);
