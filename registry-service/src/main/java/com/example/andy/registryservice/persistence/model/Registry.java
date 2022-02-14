@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Data
@@ -17,12 +19,19 @@ public class Registry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotBlank(message = "Vendor is mandatory")
     private String vendor;
+
+    @NotBlank(message = "Model is mandatory")
     private String model;
 
-    @Column(name = "serial_number")
+    @NotBlank(message = "Serial number is mandatory")
+    @Column(name = "serial_number", unique = true)
     private String serialNumber;
 
+    @NotBlank(message = "Mac address is mandatory")
+    @Pattern(regexp = "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})|([0-9a-fA-F]{4}\\.[0-9a-fA-F]{4}\\.[0-9a-fA-F]{4})$",
+            message = "Mac address must be 12-43-54-77-99-AC or 12:43:54:77:99:DC or 0123.4567.89AB")
     @Column(name = "mac_address")
     private String macAddress;
 

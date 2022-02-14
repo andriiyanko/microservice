@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class RegistryController {
     }
 
     @PostMapping("/registries")
-    public ResponseEntity<Registry> createDeviceIntoRegistry(@RequestBody Registry registry){
+    public ResponseEntity<Registry> createDeviceIntoRegistry(@Validated @RequestBody Registry registry){
         log.info("Inside createDeviceIntoRegistry method of RegistryController");
         Registry saveRegistry = registryService.saveDeviceIntoRegistry(new Registry(registry.getVendor(), registry.getModel(),
                 registry.getSerialNumber(), registry.getMacAddress()));
