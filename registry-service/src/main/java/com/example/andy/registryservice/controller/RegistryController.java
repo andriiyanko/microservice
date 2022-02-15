@@ -38,6 +38,13 @@ public class RegistryController {
 
     }
 
+    @GetMapping("/registries/{id}")
+    public ResponseEntity<Registry> getDeviceFromRegistryById(@PathVariable Integer id){
+        log.info("Inside getDeviceFromRegistryById method of RegistryController");
+        Registry device = registryService.findDeviceById(id);
+        return new ResponseEntity<>(device, HttpStatus.OK);
+    }
+
     @PostMapping("/registries")
     public ResponseEntity<Registry> createDeviceIntoRegistry(@Validated @RequestBody Registry registry){
         log.info("Inside createDeviceIntoRegistry method of RegistryController");
