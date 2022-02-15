@@ -1,5 +1,6 @@
 package com.example.andy.registryservice.persistence.dao.services.implementation;
 
+import com.example.andy.registryservice.exceptions.ResourceNotFoundException;
 import com.example.andy.registryservice.exceptions.UniqueElementException;
 import com.example.andy.registryservice.persistence.dao.repositories.RegistryRepository;
 import com.example.andy.registryservice.persistence.dao.services.interfaces.IConfigurationService;
@@ -59,6 +60,11 @@ public class RegistryServiceImpl implements IRegistryService, ISerialNumber{
         else {
             return devices;
         }
+    }
+
+    @Override
+    public Registry findDeviceById(Integer id) {
+        return registryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found device in registry with id " + id));
     }
 
     @Override

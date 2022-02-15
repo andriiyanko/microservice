@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface IRegistryService {
     Registry saveDeviceIntoRegistry(Registry registry);
     List<Registry> findAllDevicesInRegistry();
+    Registry findDeviceById(Integer id);
 }
