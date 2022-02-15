@@ -35,7 +35,6 @@ public class RegistryController {
         catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     @GetMapping("/registries/{id}")
@@ -43,6 +42,18 @@ public class RegistryController {
         log.info("Inside getDeviceFromRegistryById method of RegistryController");
         Registry device = registryService.findDeviceById(id);
         return new ResponseEntity<>(device, HttpStatus.OK);
+    }
+
+    @GetMapping("/registries/vendor/{vendor}")
+    public ResponseEntity<List<Registry>> getDeviceByVendor(@PathVariable("vendor") String vendor){
+        List<Registry> devices = registryService.findDeviceByVendor(vendor);
+        return new ResponseEntity<>(devices, HttpStatus.OK);
+    }
+
+    @GetMapping("/registries/model/{model}")
+    public ResponseEntity<List<Registry>> getDeviceByModel(@PathVariable("model") String model){
+        List<Registry> devices = registryService.findDeviceByModel(model);
+        return new ResponseEntity<>(devices, HttpStatus.OK);
     }
 
     @PostMapping("/registries")

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+
 @Service
 @Slf4j
 public class RegistryServiceImpl implements IRegistryService, ISerialNumber{
@@ -65,6 +66,30 @@ public class RegistryServiceImpl implements IRegistryService, ISerialNumber{
     @Override
     public Registry findDeviceById(Integer id) {
         return registryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found device in registry with id " + id));
+    }
+
+    @Override
+    public List<Registry> findDeviceByVendor(String vendor) {
+        log.info("Inside findDeviceByVendor method of RegistryServiceImpl");
+        List<Registry> devices = registryRepository.findRegistryByVendorContainingIgnoreCase(vendor);
+        if (devices.isEmpty()){
+            throw new ResourceNotFoundException("Not found device in registry with vendor " + vendor);
+        }
+        else {
+            return devices;
+        }
+    }
+
+    @Override
+    public List<Registry> findDeviceByModel(String model) {
+        log.info("Inside findDeviceByModel method of RegistryServiceImpl");
+        List<Registry> devices = registryRepository.findRegistryByModelContainingIgnoreCase(model);
+        if (devices.isEmpty()){
+            throw new ResourceNotFoundException("Not found device in registry with model " + model);
+        }
+        else {
+            return devices;
+        }
     }
 
     @Override
