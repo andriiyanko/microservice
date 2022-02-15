@@ -1,5 +1,6 @@
 package com.example.andy.configurationservice.persistence.dao.services.implementation;
 
+import com.example.andy.configurationservice.exceptions.ResourceNotFoundException;
 import com.example.andy.configurationservice.exceptions.UniqueElementException;
 import com.example.andy.configurationservice.persistence.dao.repositories.ConfigurationRepository;
 import com.example.andy.configurationservice.persistence.dao.services.interfaces.IConfigurationService;
@@ -10,8 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @Slf4j
@@ -24,16 +26,22 @@ public class ConfigurationServiceImpl implements IConfigurationService, ISerialN
         this.configurationRepository = configurationRepository;
     }
 
-    @Override
-    public Iterable<Configuration> findAllConfigurations() {
-        log.info("Inside findAllConfigurations of ConfigurationServiceImpl");
-        return configurationRepository.findAll();
-    }
+    public List<Configuration> findAllConfigurations() {
+      log.info("Inside findAllConfigurations of ConfigurationServiceImpl");
+      List<Configuration> configurations = new ArrayList<>();
+      configurationRepository.findAll().forEach(configurations::add);
+      if (configurations.isEmpty()){
+          return Collections.emptyList();
+      }
+      else {
+          return configurations;
+      }
+  }
 
     @Override
-    public Optional<Configuration> findConfigurationBySerialNumber(String serialNumber) {
-        log.info("Inside findConfigurationBySerialNumber of ConfigurationServiceImpl");
-        return configurationRepository.findConfigurationBySerialNumber(serialNumber);
+    public Configuration findConfigurationBySerialNumber(String serialNumber) {
+        return configurationRepository.findConfigurationBySerialNumber(serialNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Not found Configuration with serial number " + serialNumber));
     }
 
     @Override
@@ -49,8 +57,7 @@ public class ConfigurationServiceImpl implements IConfigurationService, ISerialN
         log.info("Inside checkUniqueSerialNumber method of ConfigurationServiceImpl");
         StringBuilder serialNumberBuilder = new StringBuilder(serialNumber);
 
-        List<Configuration> configurations = new ArrayList<>();
-        configurationRepository.findAll().forEach(configurations::add);
+        List<Configuration> configurations = findAllConfigurations();
 
         for (Configuration configuration : configurations) {
             if (serialNumberBuilder.toString().trim().equals(configuration.getSerialNumber()))

@@ -1,6 +1,5 @@
 package com.example.andy.configurationservice.controller;
 
-import com.example.andy.configurationservice.exceptions.ResourceNotFoundException;
 import com.example.andy.configurationservice.persistence.dao.services.interfaces.IConfigurationService;
 import com.example.andy.configurationservice.persistence.model.Configuration;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,8 +26,7 @@ public class ConfigurationController {
     public ResponseEntity<List<Configuration>> getAllConfigurations(){
         log.info("Inside getAllConfigurations method of ConfigurationController");
         try {
-            List<Configuration> configurations = new ArrayList<>();
-            configurationService.findAllConfigurations().forEach(configurations::add);
+            List<Configuration> configurations = configurationService.findAllConfigurations();
             if (configurations.isEmpty()){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -43,8 +40,8 @@ public class ConfigurationController {
     @GetMapping("/configurations/{serialNumber}")
     public ResponseEntity<Configuration> getConfigurationBySerialNumber(@PathVariable("serialNumber") String serialNumber){
         log.info("Inside getConfigurationBySerialNumber method of ConfigurationController");
-        Configuration configuration = configurationService.findConfigurationBySerialNumber(serialNumber)
-                .orElseThrow(() -> new ResourceNotFoundException("Not found Configuration with serial number " + serialNumber));
+        Configuration configuration = configurationService.findConfigurationBySerialNumber(serialNumber);
+
         return new ResponseEntity<>(configuration,HttpStatus.OK);
     }
 

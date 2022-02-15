@@ -92,10 +92,10 @@ public class ConfigurationControllerTest {
     public void givenValidConfigurationSerialNumber_thenReturnConfiguration() {
         String serialNumber = "01ABCDEF01";
         try {
-            Optional<Configuration> configurationOptional = configurations.stream()
+            Configuration configurationData = configurations.stream()
                     .filter(configuration -> configuration.getSerialNumber().equals(serialNumber))
-                    .findFirst();
-            Mockito.when(configurationService.findConfigurationBySerialNumber(serialNumber)).thenReturn(configurationOptional);
+                    .findFirst().get();
+            Mockito.when(configurationService.findConfigurationBySerialNumber(serialNumber)).thenReturn(configurationData);
             mockMvc.perform(get("/api/configurations/{serialNumber}", serialNumber))
                     .andExpect(status().isOk())
                     .andDo(print());

@@ -2,10 +2,11 @@ package com.example.andy.configurationservice.persistence.dao.services.interface
 
 import com.example.andy.configurationservice.persistence.model.Configuration;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IConfigurationService {
-    Iterable<Configuration> findAllConfigurations();
-    Optional<Configuration> findConfigurationBySerialNumber(String serialNumber);
+    List<Configuration> findAllConfigurations();
+    Configuration findConfigurationBySerialNumber(String serialNumber);
     Configuration saveConfiguration(Configuration configuration);
 }
