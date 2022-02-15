@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface IRegistryService {
     Registry saveDeviceIntoRegistry(Registry registry);
-    Iterable<Registry> findAllDevicesInRegistry();
+    List<Registry> findAllDevicesInRegistry();
 }
