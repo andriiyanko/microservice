@@ -59,7 +59,7 @@ public class ConfigurationServiceImplTest {
                 .findFirst();
         Mockito.when(configurationRepository.findConfigurationBySerialNumber(serialNumber)).thenReturn(configurationOptional);
         System.out.println(configurationService.findConfigurationBySerialNumber(serialNumber));
-        Assertions.assertEquals(configurationOptional, configurationService.findConfigurationBySerialNumber(serialNumber));
+        Assertions.assertEquals(configurationOptional.get(), configurationService.findConfigurationBySerialNumber(serialNumber));
     }
 
     @Test

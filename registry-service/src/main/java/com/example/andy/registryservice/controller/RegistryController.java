@@ -1,5 +1,6 @@
 package com.example.andy.registryservice.controller;
 
+import com.example.andy.registryservice.exceptions.ResourceNotFoundException;
 import com.example.andy.registryservice.persistence.dao.services.interfaces.IRegistryService;
 import com.example.andy.registryservice.persistence.model.Registry;
 import lombok.extern.slf4j.Slf4j;

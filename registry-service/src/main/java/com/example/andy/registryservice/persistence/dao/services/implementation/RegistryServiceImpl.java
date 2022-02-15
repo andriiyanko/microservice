@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -49,7 +51,7 @@ public class RegistryServiceImpl implements IRegistryService, ISerialNumber{
 
     @Override
     public Iterable<Registry> findAllDevicesInRegistry() {
-        log.info("Inside findAllDevicesFromRegistry method of RegistryServiceImpl");
+        log.info("Inside findAllDevicesInRegistry method of RegistryServiceImpl");
         return registryRepository.findAll();
     }
 
