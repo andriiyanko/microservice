@@ -5,14 +5,19 @@ import com.example.andy.registryservice.persistence.dao.services.interfaces.ICon
 import com.example.andy.registryservice.persistence.model.Configuration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
 @Slf4j
+@PropertySource("classpath:url.properties")
 public class ConfigurationServiceImpl implements IConfigurationService {
     private RestTemplate restTemplate;
-    private final String URL = "http://localhost:9001/api/configurations/";
+
+    @Value("${url}")
+    private String URL;
 
     @Autowired
     public void setRestTemplate(RestTemplate restTemplate) {
