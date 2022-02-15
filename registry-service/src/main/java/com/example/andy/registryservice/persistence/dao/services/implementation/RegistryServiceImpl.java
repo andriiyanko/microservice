@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -50,9 +49,16 @@ public class RegistryServiceImpl implements IRegistryService, ISerialNumber{
     }
 
     @Override
-    public Iterable<Registry> findAllDevicesInRegistry() {
+    public List<Registry> findAllDevicesInRegistry() {
         log.info("Inside findAllDevicesInRegistry method of RegistryServiceImpl");
-        return registryRepository.findAll();
+        List<Registry> devices = new ArrayList<>();
+        registryRepository.findAll().forEach(devices::add);
+        if (devices.isEmpty()){
+            return Collections.emptyList();
+        }
+        else {
+            return devices;
+        }
     }
 
     @Override
@@ -60,8 +66,7 @@ public class RegistryServiceImpl implements IRegistryService, ISerialNumber{
         log.info("Inside checkUniqueSerialNumber method of RegistryServiceImpl");
         StringBuilder serialNumberBuilder = new StringBuilder(serialNumber);
 
-        List<Registry> devices = new ArrayList<>();
-        registryRepository.findAll().forEach(devices::add);
+        List<Registry> devices = findAllDevicesInRegistry();
 
         for (Registry device : devices) {
             if (serialNumberBuilder.toString().trim().equals(device.getSerialNumber()))
